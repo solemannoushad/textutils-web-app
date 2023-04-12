@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import React from 'react'
+import Contact from "./components/Contact";
+import Navbar from "./components/Navbar";
+import TextForm from "./components/TextForm";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route
+  } from "react-router-dom";
+  
+
+export default function App(){
+    const [mode , setMode] = useState("light");
+    const changeMode = ()=>{
+        if(mode === 'light'){
+            setMode("dark");
+            console.log(mode);
+            document.body.style.backgroundColor = "#3d414e"
+            document.body.style.color = "white"
+        }else{
+            setMode("light");
+            console.log(mode);
+            document.body.style.backgroundColor = "white"
+            document.body.style.color = "black"
+        }
+    }
+    return(
+        <>
+            <Router>            
+                <Navbar logo1="text" logo2 = "utils" mode = {mode} changeMode = {changeMode} />
+                <Routes>
+                    {/* <Navbar/> */}
+                    <Route path="/" element={<TextForm mode = {mode}/>}/>
+                    <Route path="/Contact" element={<Contact/>}/>
+                </Routes>
+            </Router>
+        </>
+    )
 }
 
-export default App;
+// export default App;
